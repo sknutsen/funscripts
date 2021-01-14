@@ -24,6 +24,7 @@ def restore():
     copy(src_dir1, src_dir2, dest_dir1, dest_dir2)
 
 
+# Copies src_dir1 to dest_dir1 and src_dir2 to dest_dir2
 def copy(src_dir1, src_dir2, dest_dir1, dest_dir2):
     try:
         shutil.rmtree(dest_dir1)
