@@ -1,0 +1,131 @@
+definitions:
+  Product:
+    description: Product defines the structure for an API product
+    properties:
+      description:
+        description: The description for this product
+        type: string
+        x-go-name: Description
+      id:
+        description: The id for this product
+        format: int64
+        minimum: 1
+        type: integer
+        x-go-name: ID
+      name:
+        description: The name for this product
+        type: string
+        x-go-name: Name
+      price:
+        description: The price for this product
+        format: float
+        minimum: 0.01
+        type: number
+        x-go-name: Price
+      sku:
+        description: The sku for this product
+        type: string
+        x-go-name: SKU
+    required:
+    - id
+    - name
+    - price
+    type: object
+    x-go-package: _/C_/Users/soknu/Documents/Github/go-api/microservice-gorilla/product-api/data
+info: 
+  version: 1.0.0
+  title: api
+paths:
+  /products:
+    get:
+      description: returns a list of products
+      operationId: listProducts
+      responses:
+        "200":
+          $ref: '#/responses/productsResponse'
+      tags:
+      - products
+    post:
+      description: adds a new product to the collection
+      operationId: postProduct
+      parameters:
+      - description: Product data structure
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/Product'
+      responses:
+        "200":
+          $ref: '#/responses/noContent'
+      tags:
+      - products
+  /products/{id}:
+    delete:
+      description: Deletes the product with the specified id
+      operationId: deleteProduct
+      parameters:
+      - description: The id of the product to delete
+        format: int64
+        in: path
+        name: id
+        required: true
+        type: integer
+        x-go-name: ID
+      responses:
+        "200":
+          $ref: '#/responses/noContent'
+      tags:
+      - products
+    get:
+      description: returns a list of products
+      operationId: listSingleProduct
+      parameters:
+      - description: The id of the product to delete
+        format: int64
+        in: path
+        name: id
+        required: true
+        type: integer
+        x-go-name: ID
+      responses:
+        "200":
+          $ref: '#/responses/productResponse'
+      tags:
+      - products
+    put:
+      description: Updates the product with the specified id
+      operationId: putProduct
+      parameters:
+      - description: The id of the product to delete
+        format: int64
+        in: path
+        name: id
+        required: true
+        type: integer
+        x-go-name: ID
+      - description: Product data structure
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/Product'
+      responses:
+        "200":
+          $ref: '#/responses/noContent'
+      tags:
+      - products
+responses:
+  noContent:
+    description: ""
+  productResponse:
+    description: A product returns in the response
+    schema:
+      $ref: '#/definitions/Product'
+  productsResponse:
+    description: A list of products returns in the response
+    schema:
+      items:
+        $ref: '#/definitions/Product'
+      type: array
+swagger: "2.0"
