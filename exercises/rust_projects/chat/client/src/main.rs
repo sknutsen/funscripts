@@ -3,6 +3,7 @@ use std::net::TcpStream;
 use std::sync::mpsc::{self, TryRecvError};
 use std::thread;
 use std::time::Duration;
+use std::str;
 
 const LOCAL: &str = "127.0.0.1:6000";
 const MSG_SIZE: usize = 32;
@@ -18,7 +19,8 @@ fn main() {
         match client.read_exact(&mut buff) {
             Ok(_) => {
                 let msg = buff.into_iter().take_while(|&x| x != 0).collect::<Vec<_>>();
-                println!("message recv {:?}", msg);
+                let resp = String::from_utf8(msg).expect("Invalid utf-8"); // Converting Vec back to string
+                println!("message recv {:?}", resp);
             },
             Err(ref err) if err.kind() == ErrorKind::WouldBlock => (),
             Err(_) => {
