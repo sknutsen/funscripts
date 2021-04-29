@@ -1,0 +1,4 @@
+rustc main.rs //Compiles code
+
+cargo new NAME --bin //New project
+cargo run //Run project
